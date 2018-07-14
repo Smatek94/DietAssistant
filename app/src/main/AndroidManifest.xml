@@ -19,6 +19,8 @@
         </activity>
         <activity android:name=".view.products.ProductsActivity">
         </activity>
+        <activity android:name=".view.products.manage.ManageProductActivity">
+        </activity>
     </application>
 
 </manifest>

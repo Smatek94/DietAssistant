@@ -35,8 +35,9 @@ dependencies {
     implementation "com.google.android.material:material:$supportVersion"
     // Dagger
     implementation "com.google.dagger:dagger:$daggerVersion"
-    implementation 'androidx.appcompat:appcompat:1.0.0-alpha1'
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
+    // GSON
+    implementation 'com.google.code.gson:gson:2.8.5'
     // RxJava
     implementation "io.reactivex.rxjava2:rxjava:$rxJavaVersion"
     implementation "io.reactivex.rxjava2:rxandroid:$rxAndroidVersion"

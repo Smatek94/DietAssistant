@@ -1,9 +1,7 @@
 package com.skolimowskim.dietassistant.app
 
 import android.app.Application
-import com.skolimowskim.dietassistant.dagger.AppComponent
-import com.skolimowskim.dietassistant.dagger.DaggerAppComponent
-import com.skolimowskim.dietassistant.dagger.ViewModelModule
+import com.skolimowskim.dietassistant.dagger.*
 
 class App : Application() {
 
@@ -15,9 +13,9 @@ class App : Application() {
         component = DaggerAppComponent
                 .builder()
 //                .configModule(ConfigModule())
-//                .mainModule(MainModule(this))
-//                .netModule(NetModule())
-//                .viewModelModule(ViewModelModule())
+                .mainModule(MainModule(this))
+                .repoModule(RepoModule())
+                .viewModelModule(ViewModelModule())
                 .build()
     }
 }
