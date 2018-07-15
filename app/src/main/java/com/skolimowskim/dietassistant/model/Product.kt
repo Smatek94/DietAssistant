@@ -7,7 +7,6 @@ import java.util.*
 class Product(val name: String,
               val carbo: Int,
               val protein: Int,
-              val fat: Int) : BaseViewItem(), Serializable {
-    var uuid: String = ""
-
-}
+              val fat: Int,
+              val kcal: Int,
+              var uuid: String = "") : BaseViewItem(), Serializable

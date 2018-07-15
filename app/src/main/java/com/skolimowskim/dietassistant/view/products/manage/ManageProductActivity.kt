@@ -7,28 +7,30 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.babyassistant.ui.util.delete.OnDeleteDialogListener
 import com.skolimowskim.dietassistant.R
 import com.skolimowskim.dietassistant.app.App
 import com.skolimowskim.dietassistant.model.Product
+import com.skolimowskim.dietassistant.util.DialogUtils
+import com.skolimowskim.dietassistant.util.TextUtils
 import kotlinx.android.synthetic.main.activity_manage_product.*
 import javax.inject.Inject
 
-class ManageProductActivity : AppCompatActivity() {
-
-    @Inject
-    lateinit var viewModel: ManageProductViewModel
+class ManageProductActivity : AppCompatActivity(), OnDeleteDialogListener {
+    @Inject lateinit var viewModel: ManageProductViewModel
 
     private var isUpdate: Boolean = false
 
     private lateinit var product: Product
+    private var productUuid: String? = null
 
     private val kcalTextWatcher = object : TextWatcher {
         override fun afterTextChanged(p0: Editable?) {
-            val carbo = if (carbo_input.text.toString() != "") carbo_input.text.toString().toInt() else 0
-            val protein = if (protein_input.text.toString() != "") protein_input.text.toString().toInt() else 0
-            val fat = if (fat_input.text.toString() != "") fat_input.text.toString().toInt() else 0
+            val carbo = TextUtils.getIntValueOfText(carbo_input)
+            val protein = TextUtils.getIntValueOfText(protein_input)
+            val fat = TextUtils.getIntValueOfText(fat_input)
 
-            kcal_text.text = "" + ((carbo * 4) + (protein * 4) + (fat * 9))
+            kcal_input.setText("" + ((carbo * 4) + (protein * 4) + (fat * 9)))
         }
 
         override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
@@ -45,6 +47,8 @@ class ManageProductActivity : AppCompatActivity() {
                 .putExtra(PRODUCT_EXTRA_KEY, product)
     }
 
+    // ********************************************************************************************************************************
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_manage_product)
@@ -59,17 +63,27 @@ class ManageProductActivity : AppCompatActivity() {
             isUpdate = true
             product = intent.extras.getSerializable(PRODUCT_EXTRA_KEY) as Product
 
+            productUuid = product.uuid
+
+            name_input.editText!!.setText(product.name)
             carbo_input.setText(product.carbo.toString())
             protein_input.setText(product.protein.toString())
             fat_input.setText(product.fat.toString())
 
             manage_product.setText(R.string.update_product)
             manage_product.setOnClickListener { onUpdateClicked() }
+
+            delete_product.visibility = View.VISIBLE
+            delete_product.setOnClickListener{ onDeleteButtonClicked() }
         } else {
             manage_product.setText(R.string.add_product)
             manage_product.setOnClickListener { onAddClicked() }
+
+            delete_product.visibility = View.GONE
         }
     }
+
+    // ********************************************************************************************************************************
 
     private fun onAddClicked() {
         val productFromInputs = getProductFromInputs()
@@ -79,25 +93,51 @@ class ManageProductActivity : AppCompatActivity() {
                 .subscribe({ finish() }, { onManageFail(it) })
     }
 
+    private fun onUpdateClicked() {
+        val productFromInputs = getProductFromInputs()
+        if (productFromInputs != null)
+            viewModel.updateProduct(productFromInputs)
+                    .doOnSubscribe { toggleLoading(true) }
+                    .doFinally { toggleLoading(false) }
+                    .subscribe({ finish() }, { onManageFail(it) })
+    }
+
     private fun onManageFail(it: Throwable) {
         TODO("not implemented")
     }
 
-    private fun onUpdateClicked() {
-        val productFromInputs = getProductFromInputs()
-        if (productFromInputs != null) viewModel.updateProduct(productFromInputs)
-                .doOnSubscribe { toggleLoading(true) }
-                .doFinally { toggleLoading(false) }
-                .subscribe({ finish() }, { onManageFail(it) })
+    // ********************************************************************************************************************************
+
+    private fun onDeleteButtonClicked() {
+        DialogUtils.showDeleteDialog(getString(R.string.delete_product), supportFragmentManager)
     }
+
+    override fun onDeleteClicked() {
+        // todo toggle true, viewmodel.delete, dismiss on success and finish
+    }
+
+    override fun onCancelClicked() {
+        // todo  dismiss
+    }
+
+    // ********************************************************************************************************************************
 
     private fun getProductFromInputs(): Product? {
         // todo validate
-        return Product("test", 10, 10, 10)
+        val product = Product(name_input.editText!!.text.toString(),
+                              TextUtils.getIntValueOfText(carbo_input),
+                              TextUtils.getIntValueOfText(protein_input),
+                              TextUtils.getIntValueOfText(fat_input),
+                              TextUtils.getIntValueOfText(kcal_input))
+        if (productUuid != null) {
+            product.uuid = productUuid!!
+        }
+        return product
+
     }
 
     private fun toggleLoading(isLoading: Boolean) {
-        if(isLoading) {
+        if (isLoading) {
             manage_product_progress.visibility = View.VISIBLE
             manage_product.visibility = View.GONE
         } else {

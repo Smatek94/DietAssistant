@@ -23,7 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/space_content"
-                android:hint="@string/product_name">
+                android:hint="@string/default_product_name">
 
                 <com.google.android.material.textfield.TextInputEditText
                     style="@style/TextPrimary.Medium"
@@ -132,8 +132,8 @@
                     android:layout_weight="1"
                     android:text="@string/calories" />
 
-                <TextView
-                    android:id="@+id/kcal_text"
+                <EditText
+                    android:id="@+id/kcal_input"
                     style="@style/TextSecondary.Medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
@@ -163,6 +163,26 @@
 
         <ProgressBar
             android:id="@+id/manage_product_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom">
+
+        <!--todo color button-->
+        <Button
+            android:id="@+id/delete_product"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+
+        <ProgressBar
+            android:id="@+id/delete_product_progress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

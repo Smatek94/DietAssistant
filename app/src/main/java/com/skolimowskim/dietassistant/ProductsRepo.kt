@@ -49,8 +49,10 @@ class ProductsRepo(val sharedPreferences: SharedPreferences, val gson: Gson) {
         val iterator = productsFromCache.listIterator()
         while (iterator.hasNext()){
             val it = iterator.next()
-            if(it.uuid == product.uuid)
+            if(it.uuid == product.uuid) {
                 iterator.set(product)
+                return
+            }
         }
     }
 

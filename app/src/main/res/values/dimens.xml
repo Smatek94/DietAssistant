@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="space_content">16dp</dimen>
+    <dimen name="text_medium">16sp</dimen>
+    <dimen name="text_big">20sp</dimen>
+    <dimen name="elevation_small">2dp</dimen>
+    <dimen name="elevation_on_touch">8dp</dimen>
+    <dimen name="corners_small">5dp</dimen>
 </resources>

@@ -16,6 +16,10 @@
         <item name="android:textSize">@dimen/text_medium</item>
     </style>
 
+    <style name="TextPrimary.Big">
+        <item name="android:textSize">@dimen/text_big</item>
+    </style>
+
     <style name="TextSecondary" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/text_secondary</item>
     </style>
@@ -24,5 +28,20 @@
         <item name="android:textSize">@dimen/text_medium</item>
     </style>
 
-    <dimen name="text_medium">20sp</dimen>
+    <style name="AppCardView" parent="Widget.MaterialComponents.CardView">
+        <item name="cardElevation">@dimen/elevation_small</item>
+        <item name="android:stateListAnimator">@drawable/elevate_on_touch</item>
+    </style>
+
+    <style name="AppCardView.Space">
+        <item name="android:layout_margin">@dimen/space_content</item>
+    </style>
+
+    <style name="AppAlertDialogTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimAmount">0.7</item>
+    </style>
+
 </resources>
