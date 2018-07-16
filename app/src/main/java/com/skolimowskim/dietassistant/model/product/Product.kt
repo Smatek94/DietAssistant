@@ -1,4 +1,4 @@
-package com.skolimowskim.dietassistant.model
+package com.skolimowskim.dietassistant.model.product
 
 import com.skolimowskim.dietassistant.util.recycler.BaseViewItem
 import com.skolimowskim.dietassistant.view.products.manage.ProductCategory

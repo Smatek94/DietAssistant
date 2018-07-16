@@ -3,7 +3,7 @@ package com.skolimowskim.dietassistant.view.products.adapter
 import android.view.View
 import android.widget.TextView
 import com.skolimowskim.dietassistant.R
-import com.skolimowskim.dietassistant.model.Product
+import com.skolimowskim.dietassistant.model.product.Product
 import com.skolimowskim.dietassistant.util.OnItemSelectedListener
 import com.skolimowskim.dietassistant.util.recycler.BaseViewHolder
 import com.skolimowskim.dietassistant.util.recycler.BaseViewItem

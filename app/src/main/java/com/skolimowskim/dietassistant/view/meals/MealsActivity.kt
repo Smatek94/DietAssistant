@@ -1,4 +1,4 @@
-package com.skolimowskim.dietassistant.view.products
+package com.skolimowskim.dietassistant.view.meals
 
 import android.content.Context
 import android.content.Intent
@@ -9,19 +9,21 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.skolimowskim.dietassistant.R
 import com.skolimowskim.dietassistant.app.App
-import com.skolimowskim.dietassistant.model.product.Product
+import com.skolimowskim.dietassistant.model.meal.Meal
 import com.skolimowskim.dietassistant.util.DisposableHelper
 import com.skolimowskim.dietassistant.util.OnItemSelectedListener
-import com.skolimowskim.dietassistant.view.products.adapter.ProductsAdapter
+import com.skolimowskim.dietassistant.view.meals.adapter.MealsAdapter
+import com.skolimowskim.dietassistant.view.meals.manage.ManageMealActivity
+import com.skolimowskim.dietassistant.view.products.ProductsActivity
 import com.skolimowskim.dietassistant.view.products.manage.ManageProductActivity
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_products.*
 import javax.inject.Inject
 
-class ProductsActivity : AppCompatActivity() {
+class MealsActivity : AppCompatActivity() {
 
-    @Inject lateinit var viewModel: ProductsViewModel
-    private lateinit var productsAdapter: ProductsAdapter
+    @Inject lateinit var viewModel: MealsViewModel
+    private lateinit var mealsAdapter: MealsAdapter
 
     private var disposable: Disposable? = null
 
@@ -33,17 +35,17 @@ class ProductsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_products)
+        setContentView(R.layout.activity_meals)
 
         (application as App).component.inject(this)
 
-        productsAdapter = ProductsAdapter(LayoutInflater.from(this), object : OnItemSelectedListener<Product> {
-            override fun onItemSelected(item: Product) {
-                startActivity(ManageProductActivity.createIntent(this@ProductsActivity, item))
+        mealsAdapter = MealsAdapter(LayoutInflater.from(this), object : OnItemSelectedListener<Meal> {
+            override fun onItemSelected(item: Meal) {
+                startActivity(ManageMealActivity.createIntent(this@MealsActivity, item))
             }
         })
         products_recycler.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
-        products_recycler.adapter = productsAdapter
+        products_recycler.adapter = mealsAdapter
 
         fab.setOnClickListener {
             startActivity(ManageProductActivity.createIntent(this))
@@ -52,18 +54,18 @@ class ProductsActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        getProducts()
+        getMeals()
     }
 
-    private fun getProducts() {
+    private fun getMeals() {
         DisposableHelper.dispose(disposable)
-        disposable = viewModel.getProducts()
+        disposable = viewModel.getMeals()
                 .doOnSubscribe {}
                 .doFinally {}
-                .subscribe({ onGetProductsSuccess(it) }, {})
+                .subscribe({ onGetMealsSuccess(it) }, {})
     }
 
-    private fun onGetProductsSuccess(products: ArrayList<Product>) {
-        productsAdapter.updateProducts(products)
+    private fun onGetMealsSuccess(products: ArrayList<Meal>) {
+        mealsAdapter.updateMeals(products)
     }
 }

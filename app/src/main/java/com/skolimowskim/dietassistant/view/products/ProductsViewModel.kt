@@ -1,7 +1,7 @@
 package com.skolimowskim.dietassistant.view.products
 
-import com.skolimowskim.dietassistant.ProductsRepo
-import com.skolimowskim.dietassistant.model.Product
+import com.skolimowskim.dietassistant.model.product.ProductsRepo
+import com.skolimowskim.dietassistant.model.product.Product
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers

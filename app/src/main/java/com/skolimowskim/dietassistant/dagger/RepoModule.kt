@@ -2,10 +2,9 @@ package com.skolimowskim.dietassistant.dagger
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
-import com.google.gson.GsonBuilder
-import com.skolimowskim.dietassistant.ProductsRepo
+import com.skolimowskim.dietassistant.model.meal.MealsRepo
+import com.skolimowskim.dietassistant.model.product.ProductsRepo
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -16,6 +15,7 @@ class RepoModule {
     private val PREFS_NAME: String = "prefs_diet_assistant"
     companion object {
         const val PRODUCTS: String = "diet_assistant_products_key"
+        const val MEALS: String = "diet_assistant_meals_key"
     }
 
     @Provides
@@ -25,4 +25,8 @@ class RepoModule {
     @Provides
     @Singleton
     internal fun provideProductsRepo(sharedPreferences: SharedPreferences, gson: Gson) = ProductsRepo(sharedPreferences, gson)
+
+    @Provides
+    @Singleton
+    internal fun provideMealsRepo(sharedPreferences: SharedPreferences, gson: Gson) = MealsRepo(sharedPreferences, gson)
 }

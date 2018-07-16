@@ -1,11 +1,11 @@
-package com.skolimowskim.dietassistant
+package com.skolimowskim.dietassistant.model.product
 
 import android.content.SharedPreferences
 import com.google.gson.Gson
 import com.skolimowskim.dietassistant.dagger.RepoModule
-import com.skolimowskim.dietassistant.model.Product
 import io.reactivex.Observable
 import com.google.gson.reflect.TypeToken
+import com.skolimowskim.dietassistant.CacheResponse
 import java.util.*
 import kotlin.collections.ArrayList
 
