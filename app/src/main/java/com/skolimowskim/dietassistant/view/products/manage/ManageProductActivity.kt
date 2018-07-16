@@ -7,22 +7,28 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.babyassistant.ui.util.delete.DeleteDialog
 import com.babyassistant.ui.util.delete.OnDeleteDialogListener
 import com.skolimowskim.dietassistant.R
 import com.skolimowskim.dietassistant.app.App
 import com.skolimowskim.dietassistant.model.Product
 import com.skolimowskim.dietassistant.util.DialogUtils
+import com.skolimowskim.dietassistant.util.DisposableHelper
 import com.skolimowskim.dietassistant.util.TextUtils
+import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_manage_product.*
 import javax.inject.Inject
 
 class ManageProductActivity : AppCompatActivity(), OnDeleteDialogListener {
+
     @Inject lateinit var viewModel: ManageProductViewModel
 
     private var isUpdate: Boolean = false
 
     private lateinit var product: Product
     private var productUuid: String? = null
+
+    private var disposable: Disposable? = null
 
     private val kcalTextWatcher = object : TextWatcher {
         override fun afterTextChanged(p0: Editable?) {
@@ -74,7 +80,7 @@ class ManageProductActivity : AppCompatActivity(), OnDeleteDialogListener {
             manage_product.setOnClickListener { onUpdateClicked() }
 
             delete_product.visibility = View.VISIBLE
-            delete_product.setOnClickListener{ onDeleteButtonClicked() }
+            delete_product.setOnClickListener { onDeleteButtonClicked() }
         } else {
             manage_product.setText(R.string.add_product)
             manage_product.setOnClickListener { onAddClicked() }
@@ -87,19 +93,25 @@ class ManageProductActivity : AppCompatActivity(), OnDeleteDialogListener {
 
     private fun onAddClicked() {
         val productFromInputs = getProductFromInputs()
-        if (productFromInputs != null) viewModel.addProduct(productFromInputs)
-                .doOnSubscribe { toggleLoading(true) }
-                .doFinally { toggleLoading(false) }
-                .subscribe({ finish() }, { onManageFail(it) })
+        if (productFromInputs != null){
+            DisposableHelper.dispose(disposable)
+            disposable = viewModel.addProduct(productFromInputs)
+                    .doOnSubscribe { toggleLoading(true) }
+                    .doFinally { toggleLoading(false) }
+                    .subscribe({ finish() }, { onManageFail(it) })
+
+        }
     }
 
     private fun onUpdateClicked() {
         val productFromInputs = getProductFromInputs()
-        if (productFromInputs != null)
-            viewModel.updateProduct(productFromInputs)
+        if (productFromInputs != null) {
+            DisposableHelper.dispose(disposable)
+            disposable = viewModel.updateProduct(productFromInputs)
                     .doOnSubscribe { toggleLoading(true) }
                     .doFinally { toggleLoading(false) }
                     .subscribe({ finish() }, { onManageFail(it) })
+        }
     }
 
     private fun onManageFail(it: Throwable) {
@@ -108,16 +120,27 @@ class ManageProductActivity : AppCompatActivity(), OnDeleteDialogListener {
 
     // ********************************************************************************************************************************
 
+    private lateinit var deleteDialog: DeleteDialog
+
     private fun onDeleteButtonClicked() {
-        DialogUtils.showDeleteDialog(getString(R.string.delete_product), supportFragmentManager)
+        deleteDialog = DialogUtils.showDeleteDialog(getString(R.string.delete_product), supportFragmentManager)
     }
 
     override fun onDeleteClicked() {
-        // todo toggle true, viewmodel.delete, dismiss on success and finish
+        DisposableHelper.dispose(disposable)
+        disposable = viewModel.deleteProduct(productUuid)
+                .doOnSubscribe { toggleLoading(true) }
+                .doFinally { toggleLoading(false) }
+                .subscribe({ finish() }, { onDeleteFail(it) })
+
+    }
+
+    private fun onDeleteFail(it: Throwable) {
+        TODO("not implemented")
     }
 
     override fun onCancelClicked() {
-        // todo  dismiss
+        deleteDialog.dismiss()
     }
 
     // ********************************************************************************************************************************

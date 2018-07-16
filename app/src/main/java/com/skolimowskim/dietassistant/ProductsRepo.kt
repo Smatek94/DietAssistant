@@ -61,4 +61,22 @@ class ProductsRepo(val sharedPreferences: SharedPreferences, val gson: Gson) {
         val productsType = object : TypeToken<ArrayList<Product>>() {}.type
         return gson.fromJson<ArrayList<Product>>(productsString, productsType) ?: ArrayList()
     }
+
+    fun deleteProductInCache(productUuid: String): Observable<CacheResponse> {
+        val productsFromCache = getProductsFromCache()
+        deleteProductInList(productUuid, productsFromCache)
+        sharedPreferences.edit().putString(RepoModule.PRODUCTS, gson.toJson(productsFromCache)).apply()
+        return Observable.just(CacheResponse.SUCCESS)
+    }
+
+    private fun deleteProductInList(productUuid: String, productsFromCache: ArrayList<Product>) {
+        val iterator = productsFromCache.listIterator()
+        while (iterator.hasNext()){
+            val it = iterator.next()
+            if(it.uuid == productUuid) {
+                iterator.remove()
+                return
+            }
+        }
+    }
 }

@@ -12,15 +12,6 @@ import com.skolimowskim.dietassistant.R
 
 abstract class BaseDialog : DialogFragment() {
 
-    protected interface Args {
-        companion object {
-            const val CONTENT = "content"
-            const val EXTRA_CONTENT = "extra_content"
-        }
-    }
-
-    // ****************************************************************************************************************************************
-
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val context = activity
         val inflater = LayoutInflater.from(context)

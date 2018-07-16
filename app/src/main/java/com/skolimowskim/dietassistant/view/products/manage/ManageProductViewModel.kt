@@ -17,5 +17,12 @@ class ManageProductViewModel(private val productsRepo : ProductsRepo) {
         return productsRepo.updateProductInCache(product)
     }
 
+    fun deleteProduct(productUuid: String?): Observable<CacheResponse> {
+        return if(productUuid != null)
+            productsRepo.deleteProductInCache(productUuid)
+        else
+            Observable.empty()
+    }
+
 
 }

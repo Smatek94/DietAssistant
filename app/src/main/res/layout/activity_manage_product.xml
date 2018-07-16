@@ -154,8 +154,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom">
 
-        <!--todo color button-->
         <Button
+            style="@style/PrimaryButton"
             android:id="@+id/manage_product"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -174,12 +174,13 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom">
 
-        <!--todo color button-->
         <Button
+            style="@style/SecondaryButton"
             android:id="@+id/delete_product"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            android:text="@string/default_delete" />
 
         <ProgressBar
             android:id="@+id/delete_product_progress"

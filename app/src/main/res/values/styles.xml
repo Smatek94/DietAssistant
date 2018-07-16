@@ -44,4 +44,12 @@
         <item name="android:backgroundDimAmount">0.7</item>
     </style>
 
+    <style name="PrimaryButton">
+
+    </style>
+
+    <style name="SecondaryButton">
+
+    </style>
+
 </resources>
