@@ -9,6 +9,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.babyassistant.ui.util.delete.DeleteDialog
 import com.babyassistant.ui.util.delete.OnDeleteDialogListener
+import com.google.android.material.chip.Chip
 import com.skolimowskim.dietassistant.R
 import com.skolimowskim.dietassistant.app.App
 import com.skolimowskim.dietassistant.model.Product
@@ -17,6 +18,7 @@ import com.skolimowskim.dietassistant.util.DisposableHelper
 import com.skolimowskim.dietassistant.util.TextUtils
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_manage_product.*
+import java.util.*
 import javax.inject.Inject
 
 class ManageProductActivity : AppCompatActivity(), OnDeleteDialogListener {
@@ -29,6 +31,8 @@ class ManageProductActivity : AppCompatActivity(), OnDeleteDialogListener {
     private var productUuid: String? = null
 
     private var disposable: Disposable? = null
+
+    private lateinit var productCategorySpinnerAdapter: ProductCategorySpinnerAdapter
 
     private val kcalTextWatcher = object : TextWatcher {
         override fun afterTextChanged(p0: Editable?) {
@@ -65,6 +69,9 @@ class ManageProductActivity : AppCompatActivity(), OnDeleteDialogListener {
         protein_input.addTextChangedListener(kcalTextWatcher)
         fat_input.addTextChangedListener(kcalTextWatcher)
 
+        productCategorySpinnerAdapter = ProductCategorySpinnerAdapter(this)
+        category_spinner.adapter = productCategorySpinnerAdapter
+
         if (intent.extras != null) {
             isUpdate = true
             product = intent.extras.getSerializable(PRODUCT_EXTRA_KEY) as Product
@@ -81,6 +88,12 @@ class ManageProductActivity : AppCompatActivity(), OnDeleteDialogListener {
 
             delete_product.visibility = View.VISIBLE
             delete_product.setOnClickListener { onDeleteButtonClicked() }
+
+//            for(i in 0..category_spinner.childCount){
+//                if(category_spinner.getChildAt(i) == product.productCategory){
+//                    category_spinner.setSelection(i)
+//                }
+//            }
         } else {
             manage_product.setText(R.string.add_product)
             manage_product.setOnClickListener { onAddClicked() }
@@ -93,7 +106,7 @@ class ManageProductActivity : AppCompatActivity(), OnDeleteDialogListener {
 
     private fun onAddClicked() {
         val productFromInputs = getProductFromInputs()
-        if (productFromInputs != null){
+        if (productFromInputs != null) {
             DisposableHelper.dispose(disposable)
             disposable = viewModel.addProduct(productFromInputs)
                     .doOnSubscribe { toggleLoading(true) }
@@ -151,7 +164,8 @@ class ManageProductActivity : AppCompatActivity(), OnDeleteDialogListener {
                               TextUtils.getIntValueOfText(carbo_input),
                               TextUtils.getIntValueOfText(protein_input),
                               TextUtils.getIntValueOfText(fat_input),
-                              TextUtils.getIntValueOfText(kcal_input))
+                              TextUtils.getIntValueOfText(kcal_input),
+                              category_spinner.selectedItem as ProductCategory)
         if (productUuid != null) {
             product.uuid = productUuid!!
         }
