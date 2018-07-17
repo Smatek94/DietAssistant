@@ -1,4 +1,4 @@
-package com.skolimowskim.dietassistant.view.products.adapter
+package com.skolimowskim.dietassistant.view.meals.manage.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,18 +9,30 @@ import com.skolimowskim.dietassistant.util.recycler.BaseViewItem
 import com.skolimowskim.dietassistant.model.product.Product
 import com.skolimowskim.dietassistant.util.OnItemSelectedListener
 
-class ProductsAdapter(private val inflater: LayoutInflater, private val listener: OnItemSelectedListener<Product>) : RecyclerView.Adapter<BaseViewHolder<BaseViewItem>>() {
+class MealProductsAdapter(private val inflater: LayoutInflater, private val listener: OnItemSelectedListener<Product>) : RecyclerView.Adapter<BaseViewHolder<BaseViewItem>>() {
 
-    private val products: ArrayList<Product> = ArrayList()
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<BaseViewItem> {
-        val itemView = inflater.inflate(R.layout.item_product, parent, false)
-        return ProductViewHolder(itemView, listener)
+    companion object {
+        const val HEADER : Int = 0
+        const val ITEM : Int = 1
     }
 
-//    override fun getItemViewType(position: Int): Int {
-//        return super.getItemViewType(position)
-//    }
+    private val products: ArrayList<BaseViewItem> = ArrayList()
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<BaseViewItem> {
+        if(viewType == HEADER){
+            return AddProductToMealHeaderViewHolder(inflater.inflate(R.layout.item_add_product_to_meal_header, parent, false))
+        }
+        val itemView = inflater.inflate(R.layout.item_product_added_to_meal, parent, false)
+        return ProductAddedToMealViewHolder(itemView, listener)
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return if(position == 0){
+            HEADER
+        } else {
+            ITEM
+        }
+    }
 
     override fun getItemCount(): Int {
         return products.size
@@ -32,6 +44,7 @@ class ProductsAdapter(private val inflater: LayoutInflater, private val listener
 
     fun updateProducts(products: ArrayList<Product>){
         this.products.clear()
+        this.products.add(AddProductToMealHeader())
         this.products.addAll(products)
         notifyDataSetChanged()
     }

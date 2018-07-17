@@ -1,4 +1,4 @@
-package com.skolimowskim.dietassistant.view.products.adapter
+package com.skolimowskim.dietassistant.view.meals.manage.adapter
 
 import android.view.View
 import android.widget.TextView
@@ -8,7 +8,7 @@ import com.skolimowskim.dietassistant.util.OnItemSelectedListener
 import com.skolimowskim.dietassistant.util.recycler.BaseViewHolder
 import com.skolimowskim.dietassistant.util.recycler.BaseViewItem
 
-class ProductViewHolder(itemView: View, listener: OnItemSelectedListener<Product>) : BaseViewHolder<BaseViewItem>(itemView) {
+class ProductAddedToMealViewHolder(itemView: View, listener: OnItemSelectedListener<Product>) : BaseViewHolder<BaseViewItem>(itemView) {
 
     private lateinit var product: Product
     private val productNameText: TextView
