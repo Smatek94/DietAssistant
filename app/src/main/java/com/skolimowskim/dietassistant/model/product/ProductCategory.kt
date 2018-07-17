@@ -1,4 +1,4 @@
-package com.skolimowskim.dietassistant.view.products.manage
+package com.skolimowskim.dietassistant.model.product
 
 import androidx.annotation.StringRes
 import com.skolimowskim.dietassistant.R

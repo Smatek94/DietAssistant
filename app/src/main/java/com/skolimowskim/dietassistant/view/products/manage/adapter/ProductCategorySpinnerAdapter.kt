@@ -1,8 +1,9 @@
-package com.skolimowskim.dietassistant.view.products.manage
+package com.skolimowskim.dietassistant.view.products.manage.adapter
 
 import android.content.Context
 import android.widget.TextView
 import com.skolimowskim.dietassistant.R
+import com.skolimowskim.dietassistant.model.product.ProductCategory
 import com.skolimowskim.dietassistant.util.spinner.BaseSpinnerAdapter
 
 class ProductCategorySpinnerAdapter(context: Context) :

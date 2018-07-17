@@ -22,4 +22,16 @@ class MealsRepo(val sharedPreferences: SharedPreferences, val gson: Gson) {
         return gson.fromJson<ArrayList<Meal>>(mealsString, mealsType) ?: ArrayList()
     }
 
+    fun saveMealToCache(meal: Meal): Observable<CacheResponse> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    fun updateMealInCache(meal: Meal): Observable<CacheResponse> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    fun deleteMealInCache(mealUuid: String): Observable<CacheResponse> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
 }

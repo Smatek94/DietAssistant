@@ -3,6 +3,7 @@ package com.skolimowskim.dietassistant.dagger
 import com.skolimowskim.dietassistant.model.meal.MealsRepo
 import com.skolimowskim.dietassistant.model.product.ProductsRepo
 import com.skolimowskim.dietassistant.view.meals.MealsViewModel
+import com.skolimowskim.dietassistant.view.meals.manage.ManageMealViewModel
 import com.skolimowskim.dietassistant.view.products.ProductsViewModel
 import com.skolimowskim.dietassistant.view.products.manage.ManageProductViewModel
 import dagger.Module
@@ -23,4 +24,8 @@ class ViewModelModule {
     @Provides
     @Singleton
     internal fun provideMealsViewModel(mealsRepo: MealsRepo) = MealsViewModel(mealsRepo)
+
+    @Provides
+    @Singleton
+    internal fun provideManageMealViewModel(mealsRepo: MealsRepo) = ManageMealViewModel(mealsRepo)
 }

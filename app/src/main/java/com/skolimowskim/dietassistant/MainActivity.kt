@@ -2,6 +2,7 @@ package com.skolimowskim.dietassistant
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.skolimowskim.dietassistant.view.meals.MealsActivity
 import com.skolimowskim.dietassistant.view.products.ProductsActivity
 
 class MainActivity : AppCompatActivity() {
@@ -10,6 +11,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        startActivity(ProductsActivity.createIntent(this))
+        startActivity(MealsActivity.createIntent(this))
     }
 }

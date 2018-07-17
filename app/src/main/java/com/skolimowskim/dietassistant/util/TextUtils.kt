@@ -1,11 +1,11 @@
 package com.skolimowskim.dietassistant.util
 
-import android.widget.EditText
+import com.google.android.material.textfield.TextInputEditText
 
 object TextUtils {
 
-    fun getIntValueOfText(et: EditText): Int {
-        return if (et.text.toString() != "") et.text.toString().toInt() else 0
+    fun getIntValueOfText(textInput: TextInputEditText): Int {
+        return if (textInput.text.toString() != "") textInput.text.toString().toInt() else 0
     }
 
 }

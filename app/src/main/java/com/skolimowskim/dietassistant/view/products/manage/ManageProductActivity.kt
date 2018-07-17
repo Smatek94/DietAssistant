@@ -11,10 +11,12 @@ import com.babyassistant.ui.util.delete.DeleteDialog
 import com.babyassistant.ui.util.delete.OnDeleteDialogListener
 import com.skolimowskim.dietassistant.R
 import com.skolimowskim.dietassistant.app.App
+import com.skolimowskim.dietassistant.model.product.ProductCategory
 import com.skolimowskim.dietassistant.model.product.Product
 import com.skolimowskim.dietassistant.util.DialogUtils
 import com.skolimowskim.dietassistant.util.DisposableHelper
 import com.skolimowskim.dietassistant.util.TextUtils
+import com.skolimowskim.dietassistant.view.products.manage.adapter.ProductCategorySpinnerAdapter
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_manage_product.*
 import javax.inject.Inject
@@ -22,8 +24,6 @@ import javax.inject.Inject
 class ManageProductActivity : AppCompatActivity(), OnDeleteDialogListener {
 
     @Inject lateinit var viewModel: ManageProductViewModel
-
-    private var isUpdate: Boolean = false
 
     private lateinit var product: Product
     private var productUuid: String? = null
@@ -71,12 +71,11 @@ class ManageProductActivity : AppCompatActivity(), OnDeleteDialogListener {
         category_spinner.adapter = productCategorySpinnerAdapter
 
         if (intent.extras != null) {
-            isUpdate = true
             product = intent.extras.getSerializable(PRODUCT_EXTRA_KEY) as Product
 
             productUuid = product.uuid
 
-            name_input.editText!!.setText(product.name)
+            name_input.setText(product.name)
             carbo_input.setText(product.carbo.toString())
             protein_input.setText(product.protein.toString())
             fat_input.setText(product.fat.toString())
@@ -154,7 +153,7 @@ class ManageProductActivity : AppCompatActivity(), OnDeleteDialogListener {
 
     private fun getProductFromInputs(): Product? {
         // todo validate
-        val product = Product(name_input.editText!!.text.toString(),
+        val product = Product(name_input.text.toString(),
                                                                            TextUtils.getIntValueOfText(carbo_input),
                                                                            TextUtils.getIntValueOfText(protein_input),
                                                                            TextUtils.getIntValueOfText(fat_input),

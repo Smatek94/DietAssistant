@@ -14,10 +14,8 @@ import com.skolimowskim.dietassistant.util.DisposableHelper
 import com.skolimowskim.dietassistant.util.OnItemSelectedListener
 import com.skolimowskim.dietassistant.view.meals.adapter.MealsAdapter
 import com.skolimowskim.dietassistant.view.meals.manage.ManageMealActivity
-import com.skolimowskim.dietassistant.view.products.ProductsActivity
-import com.skolimowskim.dietassistant.view.products.manage.ManageProductActivity
 import io.reactivex.disposables.Disposable
-import kotlinx.android.synthetic.main.activity_products.*
+import kotlinx.android.synthetic.main.activity_meals.*
 import javax.inject.Inject
 
 class MealsActivity : AppCompatActivity() {
@@ -28,7 +26,7 @@ class MealsActivity : AppCompatActivity() {
     private var disposable: Disposable? = null
 
     companion object {
-        fun createIntent(context: Context): Intent = Intent(context, ProductsActivity::class.java)
+        fun createIntent(context: Context): Intent = Intent(context, MealsActivity::class.java)
     }
 
     // ********************************************************************************************************************************
@@ -44,11 +42,11 @@ class MealsActivity : AppCompatActivity() {
                 startActivity(ManageMealActivity.createIntent(this@MealsActivity, item))
             }
         })
-        products_recycler.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
-        products_recycler.adapter = mealsAdapter
+        meals_recycler.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
+        meals_recycler.adapter = mealsAdapter
 
         fab.setOnClickListener {
-            startActivity(ManageProductActivity.createIntent(this))
+            startActivity(ManageMealActivity.createIntent(this))
         }
     }
 
