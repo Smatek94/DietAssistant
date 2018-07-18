@@ -8,8 +8,11 @@ import com.skolimowskim.dietassistant.util.recycler.BaseViewHolder
 import com.skolimowskim.dietassistant.util.recycler.BaseViewItem
 import com.skolimowskim.dietassistant.model.product.Product
 import com.skolimowskim.dietassistant.util.OnItemSelectedListener
+import com.skolimowskim.dietassistant.view.meals.manage.OnAddProductClicked
 
-class MealProductsAdapter(private val inflater: LayoutInflater, private val listener: OnItemSelectedListener<Product>) : RecyclerView.Adapter<BaseViewHolder<BaseViewItem>>() {
+class MealProductsAdapter(private val inflater: LayoutInflater,
+                          private val onAddProductClickedListener: OnAddProductClicked,
+                          private val listener: OnItemSelectedListener<Product>) : RecyclerView.Adapter<BaseViewHolder<BaseViewItem>>() {
 
     companion object {
         const val HEADER : Int = 0
@@ -20,7 +23,8 @@ class MealProductsAdapter(private val inflater: LayoutInflater, private val list
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<BaseViewItem> {
         if(viewType == HEADER){
-            return AddProductToMealHeaderViewHolder(inflater.inflate(R.layout.item_add_product_to_meal_header, parent, false))
+            val itemView = inflater.inflate(R.layout.item_add_product_to_meal_header, parent, false)
+            return AddProductToMealHeaderViewHolder(itemView, onAddProductClickedListener)
         }
         val itemView = inflater.inflate(R.layout.item_product_added_to_meal, parent, false)
         return ProductAddedToMealViewHolder(itemView, listener)

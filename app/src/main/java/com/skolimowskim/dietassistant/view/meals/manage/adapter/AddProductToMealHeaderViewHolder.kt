@@ -1,17 +1,14 @@
 package com.skolimowskim.dietassistant.view.meals.manage.adapter
 
 import android.view.View
-import android.widget.TextView
-import com.skolimowskim.dietassistant.R
-import com.skolimowskim.dietassistant.model.product.Product
-import com.skolimowskim.dietassistant.util.OnItemSelectedListener
 import com.skolimowskim.dietassistant.util.recycler.BaseViewHolder
 import com.skolimowskim.dietassistant.util.recycler.BaseViewItem
+import com.skolimowskim.dietassistant.view.meals.manage.OnAddProductClicked
 
-class AddProductToMealHeaderViewHolder(itemView: View) : BaseViewHolder<BaseViewItem>(itemView) {
+class AddProductToMealHeaderViewHolder(itemView: View, onAddProductClickedListener: OnAddProductClicked) : BaseViewHolder<BaseViewItem>(itemView) {
 
     init {
-//        itemView.setOnClickListener { listener.onItemSelected(product) }
+        itemView.setOnClickListener { onAddProductClickedListener.onAddProductClicked() }
     }
 
     override fun populate(data: BaseViewItem) {

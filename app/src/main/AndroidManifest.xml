@@ -29,6 +29,8 @@
             android:name=".view.meals.manage.ManageMealActivity"
             android:windowSoftInputMode="adjustPan">
         </activity>
+        <activity android:name=".view.meals.manage.addProduct.AddProductActivity">
+        </activity>
     </application>
 
 </manifest>
