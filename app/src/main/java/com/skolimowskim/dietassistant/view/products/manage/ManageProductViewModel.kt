@@ -1,14 +1,14 @@
 package com.skolimowskim.dietassistant.view.products.manage
 
 import com.skolimowskim.dietassistant.CacheResponse
-import com.skolimowskim.dietassistant.model.product.ProductsRepo
 import com.skolimowskim.dietassistant.model.product.Product
+import com.skolimowskim.dietassistant.model.product.ProductsRepo
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 
-class ManageProductViewModel(private val productsRepo : ProductsRepo) {
+class ManageProductViewModel(private val productsRepo: ProductsRepo) {
 
     fun addProduct(product: Product): Observable<CacheResponse> {
         return productsRepo.saveProductToCache(product)
@@ -18,14 +18,14 @@ class ManageProductViewModel(private val productsRepo : ProductsRepo) {
 
     fun updateProduct(product: Product): Observable<CacheResponse> {
         return productsRepo.updateProductInCache(product)
-                .delay(10,TimeUnit.SECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
     }
 
     fun deleteProduct(productUuid: String?): Observable<CacheResponse> {
-        return if(productUuid != null)
+        return if (productUuid != null)
             productsRepo.deleteProductInCache(productUuid)
+                    .delay(3, TimeUnit.SECONDS)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
         else

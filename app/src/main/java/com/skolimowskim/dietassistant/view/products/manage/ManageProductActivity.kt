@@ -7,14 +7,15 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import androidx.annotation.DrawableRes
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.babyassistant.ui.util.delete.DeleteDialog
 import com.babyassistant.ui.util.delete.OnDeleteDialogListener
+import com.skolimowskim.dietassistant.BaseActivity
 import com.skolimowskim.dietassistant.R
 import com.skolimowskim.dietassistant.app.App
 import com.skolimowskim.dietassistant.model.product.Product
 import com.skolimowskim.dietassistant.model.product.ProductCategory
+import com.skolimowskim.dietassistant.util.AppBarHelper
 import com.skolimowskim.dietassistant.util.DialogUtils
 import com.skolimowskim.dietassistant.util.DisposableHelper
 import com.skolimowskim.dietassistant.util.TextUtils
@@ -23,7 +24,7 @@ import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_manage_product.*
 import javax.inject.Inject
 
-class ManageProductActivity : AppCompatActivity(), OnDeleteDialogListener {
+class ManageProductActivity : BaseActivity(), OnDeleteDialogListener {
 
     @Inject lateinit var viewModel: ManageProductViewModel
 
@@ -93,15 +94,15 @@ class ManageProductActivity : AppCompatActivity(), OnDeleteDialogListener {
             delete_product.setOnClickListener { onDeleteButtonClicked() }
 
             fabIcon = R.drawable.ic_update
-
+            AppBarHelper.setUpChildToolbar(this, R.string.update_product)
             category_spinner.setSelection(productCategorySpinnerAdapter.getItemPosition(product.productCategory))
         } else {
             fabIcon = R.drawable.ic_add
             //            manage_product.setText(R.string.add_product)
             onManageProductClickListener = View.OnClickListener { onAddClicked() }
             delete_product.visibility = View.GONE
+            AppBarHelper.setUpChildToolbar(this, R.string.add_product)
         }
-
         manage_product.setOnClickListener(onManageProductClickListener)
         changeFabIcon()
     }
@@ -146,8 +147,8 @@ class ManageProductActivity : AppCompatActivity(), OnDeleteDialogListener {
     override fun onDeleteClicked() {
         DisposableHelper.dispose(disposable)
         disposable = viewModel.deleteProduct(productUuid)
-                .doOnSubscribe { toggleLoading(true) }
-                .doFinally { toggleLoading(false) }
+                .doOnSubscribe { toggleDeleteLoading(true) }
+                .doFinally { toggleDeleteLoading(false) }
                 .subscribe({ finish() }, { onDeleteFail(it) })
 
     }
@@ -175,6 +176,16 @@ class ManageProductActivity : AppCompatActivity(), OnDeleteDialogListener {
         }
         return product
 
+    }
+
+    private fun toggleDeleteLoading(isLoading: Boolean) {
+        if (isLoading) {
+            delete_progress.visibility = View.VISIBLE
+            delete_product.visibility = View.GONE
+        } else {
+            delete_product.visibility = View.VISIBLE
+            delete_progress.visibility = View.GONE
+        }
     }
 
     private fun toggleLoading(isLoading: Boolean) {

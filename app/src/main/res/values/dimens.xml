@@ -10,4 +10,6 @@
     <dimen name="image_small">100dp</dimen>
     <dimen name="fab_elevation">6dp</dimen>
     <dimen name="progress_bar_in_fab_size">24dp</dimen>
+    <dimen name="space_small">8dp</dimen>
+    <dimen name="image_icon">24dp</dimen>
 </resources>

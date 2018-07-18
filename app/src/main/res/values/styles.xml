@@ -6,6 +6,13 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:navigationBarColor">@color/colorPrimary</item>
+    </style>
+
+    <style name="TextToolbar" parent="TextAppearance.AppCompat.Title">
+        <item name="android:textColor">@color/text_white</item>
+        <item name="android:textSize">@dimen/text_medium</item>
+        <!--<item name="android:fontFamily">@font/roboto_medium</item>-->
     </style>
 
     <style name="TextPrimary" parent="TextAppearance.AppCompat">
