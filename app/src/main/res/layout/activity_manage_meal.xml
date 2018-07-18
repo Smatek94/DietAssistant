@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:clipChildren="false"
     android:clipToPadding="false"
     android:orientation="vertical"
     android:padding="@dimen/space_content"
@@ -23,8 +22,8 @@
             <!--fixme remove placeholder-->
             <ImageView
                 android:id="@+id/meal_image"
-                android:layout_width="@dimen/image_medium"
-                android:layout_height="@dimen/image_medium"
+                android:layout_width="@dimen/image_small"
+                android:layout_height="@dimen/image_small"
                 android:layout_gravity="center_horizontal"
                 android:src="@drawable/ic_launcher_background" />
 

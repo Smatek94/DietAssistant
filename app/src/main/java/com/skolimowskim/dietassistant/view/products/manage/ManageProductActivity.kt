@@ -6,13 +6,15 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.babyassistant.ui.util.delete.DeleteDialog
 import com.babyassistant.ui.util.delete.OnDeleteDialogListener
 import com.skolimowskim.dietassistant.R
 import com.skolimowskim.dietassistant.app.App
-import com.skolimowskim.dietassistant.model.product.ProductCategory
 import com.skolimowskim.dietassistant.model.product.Product
+import com.skolimowskim.dietassistant.model.product.ProductCategory
 import com.skolimowskim.dietassistant.util.DialogUtils
 import com.skolimowskim.dietassistant.util.DisposableHelper
 import com.skolimowskim.dietassistant.util.TextUtils
@@ -30,7 +32,11 @@ class ManageProductActivity : AppCompatActivity(), OnDeleteDialogListener {
 
     private var disposable: Disposable? = null
 
+    @DrawableRes private var fabIcon: Int = 0
+
     private lateinit var productCategorySpinnerAdapter: ProductCategorySpinnerAdapter
+
+    private lateinit var onManageProductClickListener: View.OnClickListener
 
     private val kcalTextWatcher = object : TextWatcher {
         override fun afterTextChanged(p0: Editable?) {
@@ -80,19 +86,24 @@ class ManageProductActivity : AppCompatActivity(), OnDeleteDialogListener {
             protein_input.setText(product.protein.toString())
             fat_input.setText(product.fat.toString())
 
-            manage_product.setText(R.string.update_product)
-            manage_product.setOnClickListener { onUpdateClicked() }
+            //            manage_product.setText(R.string.update_product)
+            onManageProductClickListener = View.OnClickListener { onUpdateClicked() }
 
             delete_product.visibility = View.VISIBLE
             delete_product.setOnClickListener { onDeleteButtonClicked() }
 
+            fabIcon = R.drawable.ic_update
+
             category_spinner.setSelection(productCategorySpinnerAdapter.getItemPosition(product.productCategory))
         } else {
-            manage_product.setText(R.string.add_product)
-            manage_product.setOnClickListener { onAddClicked() }
-
+            fabIcon = R.drawable.ic_add
+            //            manage_product.setText(R.string.add_product)
+            onManageProductClickListener = View.OnClickListener { onAddClicked() }
             delete_product.visibility = View.GONE
         }
+
+        manage_product.setOnClickListener(onManageProductClickListener)
+        changeFabIcon()
     }
 
     // ********************************************************************************************************************************
@@ -154,11 +165,11 @@ class ManageProductActivity : AppCompatActivity(), OnDeleteDialogListener {
     private fun getProductFromInputs(): Product? {
         // todo validate
         val product = Product(name_input.text.toString(),
-                                                                           TextUtils.getIntValueOfText(carbo_input),
-                                                                           TextUtils.getIntValueOfText(protein_input),
-                                                                           TextUtils.getIntValueOfText(fat_input),
-                                                                           TextUtils.getIntValueOfText(kcal_input),
-                                                                           category_spinner.selectedItem as ProductCategory)
+                              TextUtils.getIntValueOfText(carbo_input),
+                              TextUtils.getIntValueOfText(protein_input),
+                              TextUtils.getIntValueOfText(fat_input),
+                              TextUtils.getIntValueOfText(kcal_input),
+                              category_spinner.selectedItem as ProductCategory)
         if (productUuid != null) {
             product.uuid = productUuid!!
         }
@@ -169,10 +180,14 @@ class ManageProductActivity : AppCompatActivity(), OnDeleteDialogListener {
     private fun toggleLoading(isLoading: Boolean) {
         if (isLoading) {
             manage_product_progress.visibility = View.VISIBLE
-            manage_product.visibility = View.GONE
+            manage_product.setImageDrawable(null)
         } else {
-            manage_product.visibility = View.VISIBLE
+            changeFabIcon()
             manage_product_progress.visibility = View.GONE
         }
+    }
+
+    private fun changeFabIcon() {
+        manage_product.setImageDrawable(ContextCompat.getDrawable(this, fabIcon))
     }
 }

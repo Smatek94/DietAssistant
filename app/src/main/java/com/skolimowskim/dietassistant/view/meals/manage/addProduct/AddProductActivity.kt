@@ -40,6 +40,7 @@ class AddProductActivity : AppCompatActivity() {
         productsAdapter = ProductsAdapter(LayoutInflater.from(this), object : OnItemSelectedListener<Product> {
             override fun onItemSelected(item: Product) {
                 setResult(Activity.RESULT_OK, Intent().putExtra(ManageMealActivity.SELECTED_PRODUCT, item))
+                finish()
             }
         })
         products_recycler.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)

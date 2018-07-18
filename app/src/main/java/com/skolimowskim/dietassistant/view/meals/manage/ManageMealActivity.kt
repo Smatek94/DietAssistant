@@ -16,6 +16,7 @@ import com.skolimowskim.dietassistant.util.OnItemSelectedListener
 import com.skolimowskim.dietassistant.view.meals.manage.adapter.MealProductsAdapter
 import com.skolimowskim.dietassistant.view.meals.manage.addProduct.AddProductActivity
 import kotlinx.android.synthetic.main.activity_manage_meal.*
+import kotlinx.android.synthetic.main.macro_layout.*
 import javax.inject.Inject
 
 class ManageMealActivity : AppCompatActivity() {
@@ -74,7 +75,7 @@ class ManageMealActivity : AppCompatActivity() {
              category_spinner.setSelection(productCategorySpinnerAdapter.getItemPosition(product.productCategory))*/
         } else {
             meal = Meal()
-            mealProductsAdapter.updateProducts(meal.productList)
+            updateMealProducts()
             /*manage_product.setText(R.string.add_product)
             manage_product.setOnClickListener { onAddClicked() }
 
@@ -88,8 +89,23 @@ class ManageMealActivity : AppCompatActivity() {
         if (requestCode == SELECT_PRODUCT_RESULT_CODE) {
             if (resultCode == Activity.RESULT_OK) {
                 meal.productList.add(data!!.getSerializableExtra(SELECTED_PRODUCT) as Product)
-                mealProductsAdapter.updateProducts(meal.productList)
+                updateMealProducts()
             }
         }
+    }
+
+    private fun updateMealProducts() {
+        mealProductsAdapter.updateProducts(meal.productList)
+        var carbo = 0
+        var protein = 0
+        var fat = 0
+        meal.productList.forEach {
+            carbo += it.carbo
+            protein += it.protein
+            fat += it.fat
+        }
+        carbo_text.text = carbo.toString()
+        protein_text.text = protein.toString()
+        fat_text.text = fat.toString()
     }
 }

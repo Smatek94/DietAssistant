@@ -56,4 +56,8 @@
         <!--todo implement style-->
     </style>
 
+    <style name="AppTheme.ProgressBar">
+        <item name="colorAccent">@color/colorPrimary</item>
+    </style>
+
 </resources>
