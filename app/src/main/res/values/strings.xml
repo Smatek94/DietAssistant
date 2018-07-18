@@ -22,4 +22,6 @@
     <string name="unknown">nieznane</string>
     <string name="category">Kategoria</string>
     <string name="default_meal_name">Meal name</string>
+    <string name="default_products">Products</string>
+    <string name="default_meals">Meals</string>
 </resources>
