@@ -7,5 +7,5 @@ import java.io.Serializable
 class Meal(val carbo: Int = 0,
            val protein: Int = 0,
            val fat: Int = 0,
-           val productList : ArrayList<Product> = ArrayList()) :
+           val productList : ArrayList<ProductInMeal> = ArrayList()) :
         BaseViewItem(), Serializable

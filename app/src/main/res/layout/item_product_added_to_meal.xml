@@ -1,30 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/AppCardView.Space"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/space_content">
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="@dimen/space_content">
+        android:orientation="horizontal">
 
-        <!--fixme remove placeholder-->
-        <ImageView
-            android:id="@+id/product_image"
-            android:layout_width="@dimen/image_small"
-            android:layout_height="@dimen/image_small"
-            android:layout_gravity="center_horizontal"
-            android:src="@drawable/ic_launcher_background" />
+        <TextView
+            android:id="@+id/product_name_text"
+            style="@style/TextPrimary.Big"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center" />
+
+        <include layout="@layout/vertical_divider" />
+
+        <TextView
+            android:id="@+id/carbo_text"
+            style="@style/TextPrimary.Medium"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center" />
+
+        <include layout="@layout/vertical_divider" />
+
+        <TextView
+            android:id="@+id/protein_text"
+            style="@style/TextPrimary.Medium"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:lines="1"
+            android:text="@string/protein" />
+
+        <include layout="@layout/vertical_divider" />
+
+        <TextView
+            android:id="@+id/fat_text"
+            style="@style/TextPrimary.Medium"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:lines="1"
+            android:text="@string/fat" />
+
+        <include layout="@layout/vertical_divider" />
+
+        <TextView
+            android:id="@+id/kcal_text"
+            style="@style/TextPrimary.Medium"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center" />
+
+        <include layout="@layout/vertical_divider" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/gram_input"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+    <include layout="@layout/divider" />
+
+</LinearLayout>
+    <!--<com.google.android.material.card.MaterialCardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/AppCardView.Space"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="@dimen/space_content">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -44,19 +110,37 @@
                     style="@style/TextPrimary.Medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/space_content" />
+                    android:layout_marginEnd="@dimen/space_small" />
 
                 <TextView
                     style="@style/TextSecondary.Medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/space_small"
                     android:text="@string/kcal" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/OutlinedTextInputLayout"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/gram_input"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    style="@style/TextSecondary.Medium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/space_content"
+                    android:text="@string/gram" />
 
             </LinearLayout>
 
             <include layout="@layout/macro_layout" />
 
         </LinearLayout>
-
-    </LinearLayout>
-</com.google.android.material.card.MaterialCardView>
+    </com.google.android.material.card.MaterialCardView>-->

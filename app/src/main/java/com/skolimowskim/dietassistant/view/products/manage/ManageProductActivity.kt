@@ -191,13 +191,7 @@ class ManageProductActivity : BaseActivity(), OnDeleteDialogListener {
     }
 
     private fun toggleLoading(isLoading: Boolean) {
-        if (isLoading) {
-            manage_product_progress.visibility = View.VISIBLE
-            manage_product.setImageDrawable(null)
-        } else {
-            changeFabIcon()
-            manage_product_progress.visibility = View.GONE
-        }
+        // fixme loading on fab
     }
 
     private fun changeFabIcon() {

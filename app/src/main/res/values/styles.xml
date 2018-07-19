@@ -51,7 +51,7 @@
         <item name="android:backgroundDimAmount">0.7</item>
     </style>
 
-    <style name="AppTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+    <style name="OutlinedTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="hintAnimationEnabled">true</item>
     </style>
 

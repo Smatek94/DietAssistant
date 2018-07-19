@@ -24,4 +24,7 @@
     <string name="default_meal_name">Nazwa posiłku</string>
     <string name="default_products">Produkty</string>
     <string name="default_meals">Posiłki</string>
+    <string name="update_meal">Zaktualizuj posiłek</string>
+    <string name="add_meal">Dodaj posiłek</string>
+    <string name="all_default">all</string>
 </resources>

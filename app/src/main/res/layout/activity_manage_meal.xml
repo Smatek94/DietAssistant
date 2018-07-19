@@ -1,98 +1,227 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:clipToPadding="false"
     android:orientation="vertical"
-    android:padding="@dimen/space_content"
     tools:context=".view.meals.manage.ManageMealActivity">
 
-    <ScrollView
+    <include layout="@layout/app_toolbar" />
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_height="match_parent"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:padding="@dimen/space_content">
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-            <!--fixme remove placeholder-->
-            <ImageView
-                android:id="@+id/meal_image"
-                android:layout_width="@dimen/image_small"
-                android:layout_height="@dimen/image_small"
-                android:layout_gravity="center_horizontal"
-                android:src="@drawable/ic_launcher_background" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/AppTextInputLayout"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/default_meal_name"
-                android:paddingBottom="@dimen/space_content">
+                android:orientation="vertical">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/name_input"
-                    style="@style/TextPrimary.Medium"
+                <!--fixme remove placeholder-->
+                <ImageView
+                    android:id="@+id/meal_image"
+                    android:layout_width="@dimen/image_small"
+                    android:layout_height="@dimen/image_small"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/ic_launcher_background" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/OutlinedTextInputLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="text" />
+                    android:hint="@string/default_meal_name"
+                    android:paddingBottom="@dimen/space_content">
 
-            </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/name_input"
+                        style="@style/TextPrimary.Medium"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text" />
 
-            <include layout="@layout/macro_layout" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/meal_products_recycler"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                <Button
+                    android:id="@+id/add_product"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/add_product" />
 
-        </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
-    </ScrollView>
+                    <TextView
+                        style="@style/TextSecondary.Medium"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="@string/default_product_name" />
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom">
+                    <include layout="@layout/vertical_divider" />
 
-        <Button
+                    <TextView
+                        style="@style/TextSecondary.Medium"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="@string/carbohydrates" />
+
+                    <include layout="@layout/vertical_divider" />
+
+                    <TextView
+                        style="@style/TextSecondary.Medium"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:lines="1"
+                        android:text="@string/protein" />
+
+                    <include layout="@layout/vertical_divider" />
+
+                    <TextView
+                        style="@style/TextSecondary.Medium"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:lines="1"
+                        android:text="@string/fat" />
+
+                    <include layout="@layout/vertical_divider" />
+
+                    <TextView
+                        style="@style/TextSecondary.Medium"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="@string/kcal" />
+
+                    <include layout="@layout/vertical_divider" />
+
+                    <TextView
+                        style="@style/TextSecondary.Medium"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="@string/gram" />
+
+                </LinearLayout>
+
+                <include layout="@layout/divider"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/meal_products_recycler"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/TextPrimary.Big"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="@string/all_default" />
+
+                    <include layout="@layout/vertical_divider" />
+
+                    <TextView
+                        android:id="@+id/carbo_text"
+                        style="@style/TextPrimary.Medium"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center" />
+
+                    <include layout="@layout/vertical_divider" />
+
+                    <TextView
+                        android:id="@+id/protein_text"
+                        style="@style/TextPrimary.Medium"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:lines="1"
+                        android:text="@string/protein" />
+
+                    <include layout="@layout/vertical_divider" />
+
+                    <TextView
+                        android:id="@+id/fat_text"
+                        style="@style/TextPrimary.Medium"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:lines="1"
+                        android:text="@string/fat" />
+
+                    <include layout="@layout/vertical_divider" />
+
+                    <TextView
+                        android:id="@+id/kcal_text"
+                        style="@style/TextPrimary.Medium"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center" />
+
+                    <include layout="@layout/vertical_divider" />
+
+                    <TextView
+                        android:id="@+id/gram_text"
+                        style="@style/TextPrimary.Medium"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:gravity="center" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/manage_meal"
-            style="@style/PrimaryButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center" />
-
-        <ProgressBar
-            android:id="@+id/manage_meal_progress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:visibility="gone" />
-    </FrameLayout>
+            android:layout_gravity="bottom|end"
+            app:fabSize="normal" />
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom">
-
-        <Button
-            android:id="@+id/delete_meal"
-            style="@style/SecondaryButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/default_delete" />
-
-        <ProgressBar
-            android:id="@+id/delete_meal_progress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:visibility="gone" />
     </FrameLayout>
 
 </LinearLayout>

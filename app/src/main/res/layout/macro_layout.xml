@@ -12,10 +12,10 @@
         android:orientation="vertical">
 
         <TextView
-            android:lines="1"
             style="@style/TextSecondary.Medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:lines="1"
             android:text="@string/carbohydrates" />
 
         <TextView
@@ -33,10 +33,10 @@
         android:orientation="vertical">
 
         <TextView
-            android:lines="1"
             style="@style/TextSecondary.Medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:lines="1"
             android:text="@string/protein" />
 
         <TextView
@@ -54,10 +54,10 @@
         android:orientation="vertical">
 
         <TextView
-            android:lines="1"
             style="@style/TextSecondary.Medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:lines="1"
             android:text="@string/fat" />
 
         <TextView
@@ -65,6 +65,27 @@
             style="@style/TextPrimary.Medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/TextSecondary.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/kcal" />
+
+        <TextView
+            android:id="@+id/kcal_text"
+            style="@style/TextPrimary.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
     </LinearLayout>
 
 </LinearLayout>
