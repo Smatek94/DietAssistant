@@ -21,7 +21,7 @@
     <string name="breads">Pieczywo</string>
     <string name="unknown">nieznane</string>
     <string name="category">Kategoria</string>
-    <string name="default_meal_name">Meal name</string>
-    <string name="default_products">Products</string>
-    <string name="default_meals">Meals</string>
+    <string name="default_meal_name">Nazwa posiłku</string>
+    <string name="default_products">Produkty</string>
+    <string name="default_meals">Posiłki</string>
 </resources>

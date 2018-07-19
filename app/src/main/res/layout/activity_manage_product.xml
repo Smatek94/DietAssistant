@@ -17,29 +17,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:titleTextAppearance="@style/TextToolbar">
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/space_content"
-                android:padding="@dimen/space_small">
-
-                <ImageView
-                    android:id="@+id/delete_product"
-                    android:layout_width="@dimen/image_icon"
-                    android:layout_height="@dimen/image_icon"
-                    android:layout_gravity="end|center_vertical"
-                    android:src="@drawable/ic_delete" />
-
-                <ProgressBar
-                    android:id="@+id/delete_progress"
-                    android:layout_width="@dimen/image_icon"
-                    android:layout_height="@dimen/image_icon"
-                    android:layout_gravity="end|center_vertical"
-                    android:visibility="gone" />
-            </FrameLayout>
-        </androidx.appcompat.widget.Toolbar>
+            app:titleTextAppearance="@style/TextToolbar"/>
 
     </com.google.android.material.appbar.AppBarLayout>
 

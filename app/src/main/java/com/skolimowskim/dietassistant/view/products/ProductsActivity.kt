@@ -7,9 +7,11 @@ import android.view.LayoutInflater
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.skolimowskim.dietassistant.BaseActivity
 import com.skolimowskim.dietassistant.R
 import com.skolimowskim.dietassistant.app.App
 import com.skolimowskim.dietassistant.model.product.Product
+import com.skolimowskim.dietassistant.util.AppBarHelper
 import com.skolimowskim.dietassistant.util.DisposableHelper
 import com.skolimowskim.dietassistant.util.OnItemSelectedListener
 import com.skolimowskim.dietassistant.view.products.adapter.ProductsAdapter
@@ -18,7 +20,7 @@ import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_products.*
 import javax.inject.Inject
 
-class ProductsActivity : AppCompatActivity() {
+class ProductsActivity : BaseActivity() {
 
     @Inject lateinit var viewModel: ProductsViewModel
     private lateinit var productsAdapter: ProductsAdapter
@@ -36,6 +38,8 @@ class ProductsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_products)
 
         (application as App).component.inject(this)
+
+        AppBarHelper.setUpChildToolbar(this, R.string.default_products)
 
         productsAdapter = ProductsAdapter(LayoutInflater.from(this), object : OnItemSelectedListener<Product> {
             override fun onItemSelected(item: Product) {

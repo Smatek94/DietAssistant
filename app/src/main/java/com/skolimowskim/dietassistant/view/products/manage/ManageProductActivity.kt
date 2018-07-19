@@ -5,6 +5,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
@@ -27,16 +29,13 @@ import javax.inject.Inject
 class ManageProductActivity : BaseActivity(), OnDeleteDialogListener {
 
     @Inject lateinit var viewModel: ManageProductViewModel
-
+    private var disposable: Disposable? = null
     private lateinit var product: Product
     private var productUuid: String? = null
 
-    private var disposable: Disposable? = null
-
     @DrawableRes private var fabIcon: Int = 0
-
+    private var isUpdate: Boolean = false
     private lateinit var productCategorySpinnerAdapter: ProductCategorySpinnerAdapter
-
     private lateinit var onManageProductClickListener: View.OnClickListener
 
     private val kcalTextWatcher = object : TextWatcher {
@@ -87,26 +86,39 @@ class ManageProductActivity : BaseActivity(), OnDeleteDialogListener {
             protein_input.setText(product.protein.toString())
             fat_input.setText(product.fat.toString())
 
-            //            manage_product.setText(R.string.update_product)
             onManageProductClickListener = View.OnClickListener { onUpdateClicked() }
-
-            delete_product.visibility = View.VISIBLE
-            delete_product.setOnClickListener { onDeleteButtonClicked() }
 
             fabIcon = R.drawable.ic_update
             AppBarHelper.setUpChildToolbar(this, R.string.update_product)
             category_spinner.setSelection(productCategorySpinnerAdapter.getItemPosition(product.productCategory))
+
+            isUpdate = true
         } else {
             fabIcon = R.drawable.ic_add
-            //            manage_product.setText(R.string.add_product)
             onManageProductClickListener = View.OnClickListener { onAddClicked() }
-            delete_product.visibility = View.GONE
             AppBarHelper.setUpChildToolbar(this, R.string.add_product)
         }
         manage_product.setOnClickListener(onManageProductClickListener)
         changeFabIcon()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.manage_product_menu, menu)
+        if (!isUpdate) {
+            val findItem = menu!!.findItem(R.id.delete)
+            findItem.isVisible = false
+        }
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if (item!!.itemId == R.id.delete) {
+            onDeleteButtonClicked()
+            return true
+        }
+        return super.onOptionsItemSelected(item)
+    }
     // ********************************************************************************************************************************
 
     private fun onAddClicked() {
@@ -147,8 +159,8 @@ class ManageProductActivity : BaseActivity(), OnDeleteDialogListener {
     override fun onDeleteClicked() {
         DisposableHelper.dispose(disposable)
         disposable = viewModel.deleteProduct(productUuid)
-                .doOnSubscribe { toggleDeleteLoading(true) }
-                .doFinally { toggleDeleteLoading(false) }
+                .doOnSubscribe { deleteDialog.toggleLoading(true) }
+                .doFinally { deleteDialog.toggleLoading(false) }
                 .subscribe({ finish() }, { onDeleteFail(it) })
 
     }
@@ -176,16 +188,6 @@ class ManageProductActivity : BaseActivity(), OnDeleteDialogListener {
         }
         return product
 
-    }
-
-    private fun toggleDeleteLoading(isLoading: Boolean) {
-        if (isLoading) {
-            delete_progress.visibility = View.VISIBLE
-            delete_product.visibility = View.GONE
-        } else {
-            delete_product.visibility = View.VISIBLE
-            delete_progress.visibility = View.GONE
-        }
     }
 
     private fun toggleLoading(isLoading: Boolean) {

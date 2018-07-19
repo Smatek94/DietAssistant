@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.skolimowskim.dietassistant.BaseActivity
 import com.skolimowskim.dietassistant.R
 import com.skolimowskim.dietassistant.app.App
 import com.skolimowskim.dietassistant.model.meal.Meal
@@ -19,7 +20,7 @@ import kotlinx.android.synthetic.main.activity_manage_meal.*
 import kotlinx.android.synthetic.main.macro_layout.*
 import javax.inject.Inject
 
-class ManageMealActivity : AppCompatActivity() {
+class ManageMealActivity : BaseActivity() {
 
     @Inject lateinit var viewModel: ManageMealViewModel
 
