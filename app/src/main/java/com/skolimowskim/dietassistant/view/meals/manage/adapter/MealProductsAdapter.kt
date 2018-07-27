@@ -12,14 +12,15 @@ import com.skolimowskim.dietassistant.util.OnItemSelectedListener
 import com.skolimowskim.dietassistant.view.meals.manage.OnAddProductClicked
 
 class MealProductsAdapter(private val inflater: LayoutInflater,
-                          private val listener: OnItemSelectedListener<ProductInMeal>) : RecyclerView.Adapter<BaseViewHolder<BaseViewItem>>() {
+                          private val listener: OnItemSelectedListener<ProductInMeal>,
+                          private val weightChangedListener: OnProductWeightChangedListener) : RecyclerView.Adapter<BaseViewHolder<BaseViewItem>>() {
 
 
     private val products: ArrayList<BaseViewItem> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<BaseViewItem> {
         val itemView = inflater.inflate(R.layout.item_product_added_to_meal, parent, false)
-        return ProductAddedToMealViewHolder(itemView, listener)
+        return ProductAddedToMealViewHolder(itemView, listener, weightChangedListener)
     }
 
     override fun getItemCount(): Int {

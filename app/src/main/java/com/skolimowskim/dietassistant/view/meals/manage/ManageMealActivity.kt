@@ -18,6 +18,7 @@ import com.skolimowskim.dietassistant.model.product.Product
 import com.skolimowskim.dietassistant.util.AppBarHelper
 import com.skolimowskim.dietassistant.util.OnItemSelectedListener
 import com.skolimowskim.dietassistant.view.meals.manage.adapter.MealProductsAdapter
+import com.skolimowskim.dietassistant.view.meals.manage.adapter.OnProductWeightChangedListener
 import com.skolimowskim.dietassistant.view.meals.manage.addProduct.AddProductActivity
 import kotlinx.android.synthetic.main.activity_manage_meal.*
 import javax.inject.Inject
@@ -51,11 +52,15 @@ class ManageMealActivity : BaseActivity() {
             override fun onItemSelected(item: ProductInMeal) {
 
             }
+        }, object : OnProductWeightChangedListener {
+            override fun productWeightChanged(weight: Int) {
+                // todo handle product weight change on ui and viewmodel
+            }
         })
         meal_products_recycler.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
         meal_products_recycler.adapter = mealProductsAdapter
 
-        add_product.setOnClickListener { startActivityForResult(AddProductActivity.createIntent(this@ManageMealActivity), SELECT_PRODUCT_RESULT_CODE)  }
+        add_product.setOnClickListener { startActivityForResult(AddProductActivity.createIntent(this@ManageMealActivity), SELECT_PRODUCT_RESULT_CODE) }
 
         if (intent.extras != null) {
             meal = intent.extras.getSerializable(MEAL_EXTRA) as Meal
