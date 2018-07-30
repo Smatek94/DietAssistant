@@ -11,6 +11,7 @@ import com.skolimowskim.dietassistant.BaseActivity
 import com.skolimowskim.dietassistant.R
 import com.skolimowskim.dietassistant.app.App
 import com.skolimowskim.dietassistant.model.meal.Meal
+import com.skolimowskim.dietassistant.util.AppBarHelper
 import com.skolimowskim.dietassistant.util.DisposableHelper
 import com.skolimowskim.dietassistant.util.OnItemSelectedListener
 import com.skolimowskim.dietassistant.view.meals.adapter.MealsAdapter
@@ -37,6 +38,8 @@ class MealsActivity : BaseActivity() {
         setContentView(R.layout.activity_meals)
 
         (application as App).component.inject(this)
+
+        AppBarHelper.setUpChildToolbar(this, R.string.default_meals)
 
         mealsAdapter = MealsAdapter(LayoutInflater.from(this), object : OnItemSelectedListener<Meal> {
             override fun onItemSelected(item: Meal) {
