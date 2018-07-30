@@ -23,7 +23,26 @@ class MealsRepo(val sharedPreferences: SharedPreferences, val gson: Gson) {
     }
 
     fun saveMealToCache(meal: Meal): Observable<CacheResponse> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val mealsFromCache = getMealsFromCache()
+        meal.uuid = generateRandomUuid(mealsFromCache)
+        mealsFromCache.add(meal)
+        sharedPreferences.edit().putString(RepoModule.MEALS, gson.toJson(mealsFromCache)).apply()
+        return Observable.just(CacheResponse.SUCCESS)
+    }
+
+    private fun generateRandomUuid(mealsFromCache: ArrayList<Meal>): String {
+        var uuid: String
+        do {
+            uuid = UUID.randomUUID().toString()
+        } while (isUuidInCache(uuid, mealsFromCache))
+        return uuid
+    }
+
+    private fun isUuidInCache(uuid: String, mealsFromCache: ArrayList<Meal>): Boolean {
+        mealsFromCache.forEach{
+            if(it.uuid == uuid) return true
+        }
+        return false
     }
 
     fun updateMealInCache(meal: Meal): Observable<CacheResponse> {
