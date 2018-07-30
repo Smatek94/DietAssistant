@@ -7,7 +7,6 @@ import android.widget.TextView
 import com.google.android.material.textfield.TextInputEditText
 import com.skolimowskim.dietassistant.R
 import com.skolimowskim.dietassistant.model.meal.ProductInMeal
-import com.skolimowskim.dietassistant.model.product.Product
 import com.skolimowskim.dietassistant.util.OnItemSelectedListener
 import com.skolimowskim.dietassistant.util.recycler.BaseViewHolder
 import com.skolimowskim.dietassistant.util.recycler.BaseViewItem
@@ -24,6 +23,10 @@ class ProductAddedToMealViewHolder(itemView: View,
     private val kcal: TextView
     private val gram: TextInputEditText
 
+    private var test: Boolean = true // todo rename
+
+    private var positionInAdapter: Int = 0
+
     init {
         itemView.setOnClickListener { listener.onItemSelected(productInMeal) }
         productNameText = itemView.findViewById(R.id.product_name_text)
@@ -33,7 +36,7 @@ class ProductAddedToMealViewHolder(itemView: View,
         kcal = itemView.findViewById(R.id.kcal_text)
         gram = itemView.findViewById(R.id.gram_input)
         gram.addTextChangedListener(object : TextWatcher { // todo change to simpleTextWatcher
-            override fun afterTextChanged(p0: Editable?) {
+            override fun afterTextChanged(text: Editable?) {
 
             }
 
@@ -42,23 +45,35 @@ class ProductAddedToMealViewHolder(itemView: View,
             }
 
             override fun onTextChanged(text: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                if(text != null && text.isNotEmpty()){
-                    onProductWeightChangedListener.productWeightChanged(text.toString().toInt())
+                if (test && text != null && text.isNotEmpty()) {
+                    onProductWeightChangedListener.productWeightChanged(text.toString().toInt(), positionInAdapter)
+                    productInMeal.weight = text.toString().toInt()
+                    updateMacro()
                 }
             }
         })
     }
 
+    fun populate(data: BaseViewItem, position: Int) {
+        this.positionInAdapter = position
+        populate(data)
+    }
+
     override fun populate(data: BaseViewItem) {
         this.productInMeal = data as ProductInMeal
+        updateMacro()
+        test = false
+        gram.setText(productInMeal.weight.toString())
+        test = true
+    }
+
+    private fun updateMacro() {
         val product = productInMeal.product
         productNameText.text = product.name
-        val weightPercent = productInMeal.weight / 100
-        carbo.text = (weightPercent * product.carbo).toString()
-        protein.text = (weightPercent * product.protein).toString()
-        fat.text = (weightPercent * product.fat).toString()
-        kcal.text = (weightPercent * product.kcal).toString()
-        gram.setText(productInMeal.weight.toString())
+        carbo.text = (productInMeal.weight * product.carbo / 100).toString()
+        protein.text = (productInMeal.weight * product.protein / 100).toString()
+        fat.text = (productInMeal.weight * product.fat / 100).toString()
+        kcal.text = (productInMeal.weight * product.kcal / 100).toString()
     }
 
 }

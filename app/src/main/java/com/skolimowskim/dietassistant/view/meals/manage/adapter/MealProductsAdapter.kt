@@ -28,7 +28,8 @@ class MealProductsAdapter(private val inflater: LayoutInflater,
     }
 
     override fun onBindViewHolder(holder: BaseViewHolder<BaseViewItem>, position: Int) {
-        holder.populate(products[position])
+        val productAddedToMealViewHolder = holder as ProductAddedToMealViewHolder
+        productAddedToMealViewHolder.populate(products[position], position)
     }
 
     fun updateProducts(products: ArrayList<ProductInMeal>){

@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,10 +17,12 @@ import com.skolimowskim.dietassistant.model.meal.Meal
 import com.skolimowskim.dietassistant.model.meal.ProductInMeal
 import com.skolimowskim.dietassistant.model.product.Product
 import com.skolimowskim.dietassistant.util.AppBarHelper
+import com.skolimowskim.dietassistant.util.DisposableHelper
 import com.skolimowskim.dietassistant.util.OnItemSelectedListener
 import com.skolimowskim.dietassistant.view.meals.manage.adapter.MealProductsAdapter
 import com.skolimowskim.dietassistant.view.meals.manage.adapter.OnProductWeightChangedListener
 import com.skolimowskim.dietassistant.view.meals.manage.addProduct.AddProductActivity
+import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_manage_meal.*
 import javax.inject.Inject
 
@@ -30,6 +33,8 @@ class ManageMealActivity : BaseActivity() {
 
     private lateinit var mealProductsAdapter: MealProductsAdapter
     @DrawableRes private var fabIcon: Int = 0
+
+    private var disposable: Disposable? = null
 
     companion object {
         fun createIntent(context: Context): Intent = Intent(context, ManageMealActivity::class.java)
@@ -53,8 +58,9 @@ class ManageMealActivity : BaseActivity() {
 
             }
         }, object : OnProductWeightChangedListener {
-            override fun productWeightChanged(weight: Int) {
-                // todo handle product weight change on ui and viewmodel
+            override fun productWeightChanged(weight: Int, position: Int) {
+                meal.productList[position].weight = weight
+                updateAllProductsMacro()
             }
         })
         meal_products_recycler.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
@@ -66,56 +72,68 @@ class ManageMealActivity : BaseActivity() {
             meal = intent.extras.getSerializable(MEAL_EXTRA) as Meal
             AppBarHelper.setUpChildToolbar(this, R.string.update_meal)
             fabIcon = R.drawable.ic_update
-
-            /* productUuid = product.uuid
-
-             name_input.setText(product.name)
-             carbo_input.setText(product.carbo.toString())
-             protein_input.setText(product.protein.toString())
-             fat_input.setText(product.fat.toString())
-
-             manage_product.setText(R.string.update_product)
-             manage_product.setOnClickListener { onUpdateClicked() }
-
-             delete_product.visibility = View.VISIBLE
-             delete_product.setOnClickListener { onDeleteButtonClicked() }
-
-             category_spinner.setSelection(productCategorySpinnerAdapter.getItemPosition(product.productCategory))*/
+            manage_meal.setOnClickListener { onUpdateClicked() }
         } else {
             meal = Meal()
             updateMealProducts()
             AppBarHelper.setUpChildToolbar(this, R.string.add_meal)
             fabIcon = R.drawable.ic_add
-            /*manage_product.setText(R.string.add_product)
-            manage_product.setOnClickListener { onAddClicked() }
-
-            delete_product.visibility = View.GONE*/
+            manage_meal.setOnClickListener { onAddClicked() }
         }
         changeFabIcon()
+    }
+
+    private fun onAddClicked() {
+        DisposableHelper.dispose(disposable)
+        disposable = viewModel.addMeal(meal)
+                .doOnSubscribe { }
+                .doFinally { }
+                .subscribe({ finish() }, { onManageFail(it) })
+    }
+
+    private fun onUpdateClicked() {
+        DisposableHelper.dispose(disposable)
+        disposable = viewModel.updateMeal(meal)
+                .doOnSubscribe { }
+                .doFinally { }
+                .subscribe({ finish() }, { onManageFail(it) })
+    }
+
+    private fun onManageFail(it: Throwable) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == SELECT_PRODUCT_RESULT_CODE) {
             if (resultCode == Activity.RESULT_OK) {
-                meal.productList.add(ProductInMeal(data!!.getSerializableExtra(SELECTED_PRODUCT) as Product, 100))
-                updateMealProducts()
+                val productInMeal = ProductInMeal(data!!.getSerializableExtra(SELECTED_PRODUCT) as Product, 100)
+                if (!meal.productList.contains(productInMeal)) {
+                    meal.productList.add(productInMeal)
+                    updateMealProducts()
+                } else {
+                    Toast.makeText(this, R.string.product_already_added, Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
 
     private fun updateMealProducts() {
         mealProductsAdapter.updateProducts(meal.productList)
+        updateAllProductsMacro()
+    }
+
+    private fun updateAllProductsMacro() {
         var carbo = 0
         var protein = 0
         var fat = 0
         var kcal = 0
         var gram = 0
         meal.productList.forEach {
-            carbo += it.product.carbo
-            protein += it.product.protein
-            fat += it.product.fat
-            kcal += it.product.kcal
+            carbo += it.product.carbo * it.weight / 100
+            protein += it.product.protein * it.weight / 100
+            fat += it.product.fat * it.weight / 100
+            kcal += it.product.kcal * it.weight / 100
             gram += it.weight
         }
         carbo_text.text = carbo.toString()
