@@ -31,9 +31,9 @@ class MealsAdapter(private val inflater: LayoutInflater, private val listener: O
         holder.populate(meals[position])
     }
 
-    fun updateMeals(products: ArrayList<Meal>){
+    fun updateMeals(meals: ArrayList<Meal>){
         this.meals.clear()
-        this.meals.addAll(products)
+        this.meals.addAll(meals)
         notifyDataSetChanged()
     }
 

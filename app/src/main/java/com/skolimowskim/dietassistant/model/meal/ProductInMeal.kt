@@ -2,8 +2,9 @@ package com.skolimowskim.dietassistant.model.meal
 
 import com.skolimowskim.dietassistant.model.product.Product
 import com.skolimowskim.dietassistant.util.recycler.BaseViewItem
+import java.io.Serializable
 
-class ProductInMeal(val product: Product, var weight: Int) : BaseViewItem() {
+class ProductInMeal(val product: Product, var weight: Int) : BaseViewItem(), Serializable {
 
     override fun equals(other: Any?): Boolean {
         if (other != null) {

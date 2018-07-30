@@ -10,7 +10,7 @@ import com.skolimowskim.dietassistant.model.product.Product
 import java.util.*
 import kotlin.collections.ArrayList
 
-class MealsRepo(val sharedPreferences: SharedPreferences, val gson: Gson) {
+class MealsRepo(private val sharedPreferences: SharedPreferences, private val gson: Gson) {
 
     fun getMeals(): Observable<ArrayList<Meal>> {
         return Observable.just(getMealsFromCache())
@@ -30,6 +30,42 @@ class MealsRepo(val sharedPreferences: SharedPreferences, val gson: Gson) {
         return Observable.just(CacheResponse.SUCCESS)
     }
 
+    fun updateMealInCache(meal: Meal): Observable<CacheResponse> {
+        val mealsFromCache = getMealsFromCache()
+        updateMealInList(meal, mealsFromCache)
+        sharedPreferences.edit().putString(RepoModule.MEALS, gson.toJson(mealsFromCache)).apply()
+        return Observable.just(CacheResponse.SUCCESS)
+    }
+
+    fun deleteMealInCache(mealUuid: String): Observable<CacheResponse> {
+        val mealsFromCache = getMealsFromCache()
+        deleteMealInList(mealUuid, mealsFromCache)
+        sharedPreferences.edit().putString(RepoModule.MEALS, gson.toJson(mealsFromCache)).apply()
+        return Observable.just(CacheResponse.SUCCESS)
+    }
+
+    private fun updateMealInList(meal: Meal, mealsFromCache: ArrayList<Meal>) {
+        val iterator = mealsFromCache.listIterator()
+        while (iterator.hasNext()){
+            val it = iterator.next()
+            if(it.uuid == meal.uuid) {
+                iterator.set(meal)
+                return
+            }
+        }
+    }
+
+    private fun deleteMealInList(mealUuid: String, mealsFromCache: ArrayList<Meal>) {
+        val iterator = mealsFromCache.listIterator()
+        while (iterator.hasNext()){
+            val it = iterator.next()
+            if(it.uuid == mealUuid) {
+                iterator.remove()
+                return
+            }
+        }
+    }
+
     private fun generateRandomUuid(mealsFromCache: ArrayList<Meal>): String {
         var uuid: String
         do {
@@ -43,14 +79,6 @@ class MealsRepo(val sharedPreferences: SharedPreferences, val gson: Gson) {
             if(it.uuid == uuid) return true
         }
         return false
-    }
-
-    fun updateMealInCache(meal: Meal): Observable<CacheResponse> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    fun deleteMealInCache(mealUuid: String): Observable<CacheResponse> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
 }

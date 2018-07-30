@@ -64,7 +64,7 @@ class MealsActivity : BaseActivity() {
                 .subscribe({ onGetMealsSuccess(it) }, {})
     }
 
-    private fun onGetMealsSuccess(products: ArrayList<Meal>) {
-        mealsAdapter.updateMeals(products)
+    private fun onGetMealsSuccess(meals: ArrayList<Meal>) {
+        mealsAdapter.updateMeals(meals)
     }
 }
