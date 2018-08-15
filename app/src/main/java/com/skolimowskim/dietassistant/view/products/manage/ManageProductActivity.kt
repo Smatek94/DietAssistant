@@ -21,7 +21,8 @@ import com.skolimowskim.dietassistant.util.AppBarHelper
 import com.skolimowskim.dietassistant.util.DialogUtils
 import com.skolimowskim.dietassistant.util.DisposableHelper
 import com.skolimowskim.dietassistant.util.TextUtils
-import com.skolimowskim.dietassistant.view.products.manage.adapter.ProductCategorySpinnerAdapter
+import com.skolimowskim.dietassistant.view.products.manage.adapter.category.ProductCategorySpinnerAdapter
+import com.skolimowskim.dietassistant.view.products.manage.adapter.quantity.ProductQuantitySpinnerAdapter
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_manage_product.*
 import javax.inject.Inject
@@ -36,6 +37,7 @@ class ManageProductActivity : BaseActivity(), OnDeleteDialogListener {
     @DrawableRes private var fabIcon: Int = 0
     private var isUpdate: Boolean = false
     private lateinit var productCategorySpinnerAdapter: ProductCategorySpinnerAdapter
+    private lateinit var productQuantitySpinnerAdapter: ProductQuantitySpinnerAdapter
     private lateinit var onManageProductClickListener: View.OnClickListener
 
     private val kcalTextWatcher = object : TextWatcher {
@@ -75,6 +77,9 @@ class ManageProductActivity : BaseActivity(), OnDeleteDialogListener {
 
         productCategorySpinnerAdapter = ProductCategorySpinnerAdapter(this)
         category_spinner.adapter = productCategorySpinnerAdapter
+
+        productQuantitySpinnerAdapter = ProductQuantitySpinnerAdapter(this)
+        quantity_spinner.adapter = productQuantitySpinnerAdapter
 
         if (intent.extras != null) {
             product = intent.extras.getSerializable(PRODUCT_EXTRA_KEY) as Product

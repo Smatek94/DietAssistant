@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--todo add scrollview-->
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -69,10 +70,9 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="@string/carbohydrates" />
+                        android:text="@string/carbohydrates_in_gram" />
 
                     <com.google.android.material.textfield.TextInputLayout
-                        style="@style/OutlinedTextInputLayout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
 
@@ -80,15 +80,11 @@
                             android:id="@+id/carbo_input"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:inputType="number" />
+                            android:inputType="number"
+                            android:text="0" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/space_content"
-                        android:text="@string/gram" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -102,10 +98,9 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="@string/protein" />
+                        android:text="@string/protein_in_gram" />
 
                     <com.google.android.material.textfield.TextInputLayout
-                        style="@style/OutlinedTextInputLayout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
 
@@ -113,15 +108,11 @@
                             android:id="@+id/protein_input"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:inputType="number" />
+                            android:inputType="number"
+                            android:text="0" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/space_content"
-                        android:text="@string/gram" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -135,10 +126,9 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="@string/fat" />
+                        android:text="@string/fat_in_gram" />
 
                     <com.google.android.material.textfield.TextInputLayout
-                        style="@style/OutlinedTextInputLayout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
 
@@ -146,23 +136,19 @@
                             android:id="@+id/fat_input"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:inputType="number" />
+                            android:inputType="number"
+                            android:text="0" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/space_content"
-                        android:text="@string/gram" />
                 </LinearLayout>
 
                 <include
                     layout="@layout/divider"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginTop="@dimen/space_small"
-                    android:layout_marginBottom="@dimen/space_small" />
+                    android:layout_marginBottom="@dimen/space_small"
+                    android:layout_marginTop="@dimen/space_small" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -175,10 +161,9 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="@string/calories" />
+                        android:text="@string/calories_in_gram" />
 
                     <com.google.android.material.textfield.TextInputLayout
-                        style="@style/OutlinedTextInputLayout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
 
@@ -186,15 +171,48 @@
                             android:id="@+id/kcal_input"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:inputType="number" />
+                            android:inputType="number"
+                            android:text="0" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
                     <TextView
+                        style="@style/TextPrimary.Medium"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/space_content"
-                        android:text="@string/kcal" />
+                        android:text="@string/quantity_in_gram_in_one_portion" />
+
+                    <Spinner
+                        android:id="@+id/quantity_spinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/quantity_weight_input"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:inputType="number"
+                            android:text="100" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
                 </LinearLayout>
 
             </LinearLayout>

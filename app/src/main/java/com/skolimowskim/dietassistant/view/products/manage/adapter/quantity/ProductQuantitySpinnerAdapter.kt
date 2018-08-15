@@ -1,4 +1,4 @@
-package com.skolimowskim.dietassistant.view.products.manage.adapter
+package com.skolimowskim.dietassistant.view.products.manage.adapter.quantity
 
 import android.content.Context
 import android.widget.TextView
@@ -6,8 +6,9 @@ import com.skolimowskim.dietassistant.R
 import com.skolimowskim.dietassistant.model.product.ProductCategory
 import com.skolimowskim.dietassistant.util.spinner.BaseSpinnerAdapter
 
-class ProductCategorySpinnerAdapter(context: Context) :
-        BaseSpinnerAdapter<ProductCategory>(context, R.layout.spinner_product_category, R.layout.spinner_product_category_item) {
+class ProductQuantitySpinnerAdapter(context: Context) :
+        BaseSpinnerAdapter<ProductCategory>(context, R.layout.spinner_product_quantity, R.layout.spinner_product_quantity) {
+    //fixme spinner width is acting like match parent
 
     override fun getList(): Collection<ProductCategory> {
         val productCategoryList = ArrayList(ProductCategory.values().toList())

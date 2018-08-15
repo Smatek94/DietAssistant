@@ -28,4 +28,9 @@
     <string name="add_meal">Dodaj posiłek</string>
     <string name="all_default">all</string>
     <string name="product_already_added">Produkt juz jest dodany do posilku</string>
+    <string name="quantity_in_gram_in_one_portion">Ilość (gram) w jednej : </string>
+    <string name="carbohydrates_in_gram">Węgle (gram)</string>
+    <string name="protein_in_gram">Białko (gram)</string>
+    <string name="fat_in_gram">Tłuszcz (gram)</string>
+    <string name="calories_in_gram">Kalorie (gram)</string>
 </resources>
