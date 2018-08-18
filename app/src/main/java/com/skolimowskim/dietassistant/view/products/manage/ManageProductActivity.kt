@@ -17,6 +17,7 @@ import com.skolimowskim.dietassistant.R
 import com.skolimowskim.dietassistant.app.App
 import com.skolimowskim.dietassistant.model.product.Product
 import com.skolimowskim.dietassistant.model.product.ProductCategory
+import com.skolimowskim.dietassistant.model.product.ProductQuantity
 import com.skolimowskim.dietassistant.util.AppBarHelper
 import com.skolimowskim.dietassistant.util.DialogUtils
 import com.skolimowskim.dietassistant.util.DisposableHelper
@@ -29,12 +30,14 @@ import javax.inject.Inject
 
 class ManageProductActivity : BaseActivity(), OnDeleteDialogListener {
 
-    @Inject lateinit var viewModel: ManageProductViewModel
+    @Inject
+    lateinit var viewModel: ManageProductViewModel
     private var disposable: Disposable? = null
     private lateinit var product: Product
     private var productUuid: String? = null
 
-    @DrawableRes private var fabIcon: Int = 0
+    @DrawableRes
+    private var fabIcon: Int = 0
     private var isUpdate: Boolean = false
     private lateinit var productCategorySpinnerAdapter: ProductCategorySpinnerAdapter
     private lateinit var productQuantitySpinnerAdapter: ProductQuantitySpinnerAdapter
@@ -90,12 +93,14 @@ class ManageProductActivity : BaseActivity(), OnDeleteDialogListener {
             carbo_input.setText(product.carbo.toString())
             protein_input.setText(product.protein.toString())
             fat_input.setText(product.fat.toString())
+            quantity_weight_input.setText(product.productQuantityWeight.toString())
 
             onManageProductClickListener = View.OnClickListener { onUpdateClicked() }
 
             fabIcon = R.drawable.ic_update
             AppBarHelper.setUpChildToolbar(this, R.string.update_product)
             category_spinner.setSelection(productCategorySpinnerAdapter.getItemPosition(product.productCategory))
+            quantity_spinner.setSelection(productQuantitySpinnerAdapter.getItemPosition(product.productQuantity))
 
             isUpdate = true
         } else {
@@ -187,7 +192,9 @@ class ManageProductActivity : BaseActivity(), OnDeleteDialogListener {
                               TextUtils.getIntValueOfText(protein_input),
                               TextUtils.getIntValueOfText(fat_input),
                               TextUtils.getIntValueOfText(kcal_input),
-                              category_spinner.selectedItem as ProductCategory)
+                              category_spinner.selectedItem as ProductCategory,
+                              quantity_spinner.selectedItem as ProductQuantity,
+                              TextUtils.getIntValueOfText(quantity_weight_input))
         if (productUuid != null) {
             product.uuid = productUuid!!
         }

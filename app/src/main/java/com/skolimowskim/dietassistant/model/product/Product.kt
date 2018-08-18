@@ -9,6 +9,8 @@ class Product(val name: String,
               val fat: Int,
               val kcal: Int,
               val productCategory: ProductCategory,
+              val productQuantity: ProductQuantity,
+              val productQuantityWeight: Int,
               var uuid: String = "") : BaseViewItem(), Serializable {
 
 }
