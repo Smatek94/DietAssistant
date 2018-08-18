@@ -33,4 +33,8 @@
     <string name="protein_in_gram">Białko (gram)</string>
     <string name="fat_in_gram">Tłuszcz (gram)</string>
     <string name="calories_in_gram">Kalorie (gram)</string>
+    <string name="pieces">sztuka</string>
+    <string name="packages">opakowanie</string>
+    <string name="handfuls">garść</string>
+    <string name="spoons">łyżeczka</string>
 </resources>
