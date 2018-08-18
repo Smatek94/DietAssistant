@@ -37,4 +37,13 @@
     <string name="packages">opakowanie</string>
     <string name="handfuls">garść</string>
     <string name="spoons">łyżeczka</string>
+    <string-array name="days_prefixes">
+        <item>Pon</item>
+        <item>Wt</item>
+        <item>Śr</item>
+        <item>Czw</item>
+        <item>Pt</item>
+        <item>Sob</item>
+        <item>Ndz</item>
+    </string-array>
 </resources>
