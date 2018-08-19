@@ -1,10 +1,12 @@
 package com.skolimowskim.dietassistant
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
+import java.util.*
 
 class CalendarAdapter(private val inflater: LayoutInflater) : BaseAdapter() {
 
@@ -13,7 +15,12 @@ class CalendarAdapter(private val inflater: LayoutInflater) : BaseAdapter() {
     override fun getView(postiion: Int, convertView: View?, parentView: ViewGroup?): View {
         val itemView = convertView ?: inflater.inflate(R.layout.item_calendar, parentView, false)
         val test = itemView.findViewById<TextView>(R.id.test)
-        test.text = "" + postiion
+        val calendarItem = items[postiion]
+        val instance = Calendar.getInstance()
+        instance.time = calendarItem.time
+        test.text = instance.get(Calendar.DAY_OF_MONTH).toString()
+        if (!calendarItem.sameMonth) test.setBackgroundColor(itemView.context.getColor(R.color.gray_calendar))
+        else test.setBackgroundColor(itemView.context.getColor(R.color.text_white))
         return itemView
     }
 

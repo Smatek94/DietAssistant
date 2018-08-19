@@ -9,5 +9,6 @@
     <color name="text_secondary">#9e9e9e</color>
     <color name="black">#000000</color>
     <color name="background">#ffffff</color>
+    <color name="gray_calendar">#777777</color>
 
 </resources>
