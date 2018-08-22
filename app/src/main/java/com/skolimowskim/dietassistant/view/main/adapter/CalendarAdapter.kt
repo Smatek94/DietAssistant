@@ -1,11 +1,13 @@
-package com.skolimowskim.dietassistant
+package com.skolimowskim.dietassistant.view.main.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
+import com.skolimowskim.dietassistant.R
+import com.skolimowskim.dietassistant.model.main.CalendarItem
+import com.skolimowskim.dietassistant.view.main.OnCalendarItemClickedListener
 import java.util.*
 
 class CalendarAdapter(private val inflater: LayoutInflater, private val listener: OnCalendarItemClickedListener) : BaseAdapter() {
