@@ -52,7 +52,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         initCalendarHeaders()
-        calendarAdapter = CalendarAdapter(LayoutInflater.from(this))
+        calendarAdapter = CalendarAdapter(LayoutInflater.from(this), object : OnCalendarItemClickedListener {
+            override fun onCalendarItemClicked(position: Int) {
+                // fixme handle calendar item clicked
+            }
+        })
         calendar_grid.adapter = calendarAdapter
 
         updateCalendar()
