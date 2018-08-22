@@ -1,7 +1,6 @@
-package com.skolimowskim.dietassistant
+package com.skolimowskim.dietassistant.view.main
 
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -13,6 +12,9 @@ import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
+import com.skolimowskim.dietassistant.R
+import com.skolimowskim.dietassistant.model.main.CalendarItem
+import com.skolimowskim.dietassistant.view.main.adapter.CalendarAdapter
 import com.skolimowskim.dietassistant.view.meals.MealsActivity
 import com.skolimowskim.dietassistant.view.products.ProductsActivity
 import kotlinx.android.synthetic.main.activity_main.*

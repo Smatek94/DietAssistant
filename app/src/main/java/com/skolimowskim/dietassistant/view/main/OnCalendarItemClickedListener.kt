@@ -1,4 +1,4 @@
-package com.skolimowskim.dietassistant
+package com.skolimowskim.dietassistant.view.main
 
 interface OnCalendarItemClickedListener {
     fun onCalendarItemClicked(position: Int)

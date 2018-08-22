@@ -1,4 +1,4 @@
-package com.skolimowskim.dietassistant
+package com.skolimowskim.dietassistant.model.main
 
 import java.io.Serializable
 import java.util.*
